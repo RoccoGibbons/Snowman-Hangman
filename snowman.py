@@ -3,22 +3,24 @@ import random
 def main():
     difficulty = int(input("What difficulty do you want to play? \neasy: 1, medium: 2, hard: 3\n"))
     
-    word = random_word(difficulty).lower()
-    length = len(word) - 1
+    word = random_word(difficulty).strip()
+    length = len(word)
     display = []
-
-    print(word)
 
     for i in range(length):
         display.append('-')
 
     incorrect_guesses = 0
     guessed = False
-
+    
     while True:
-        print(display)
+        print()
+        print_list(display)
+
         guess = input("Guess a letter or word: ")
         guess = guess.lower()
+        print()
+
         if guess == word:
             guessed = True
 
@@ -30,7 +32,7 @@ def main():
         else:
             incorrect_guesses += 1
             print_snowman(incorrect_guesses)
-        
+
         if ''.join(display) == word:
             guessed = True
 
@@ -39,8 +41,9 @@ def main():
 
     if incorrect_guesses == 6:
         print("Game over! The word was ", word)
+    
     elif guessed == True:
-        print("You guessed the word! You win!")
+        print("You win! The word was ", word)
 
 
 def random_word(difficulty):
@@ -60,22 +63,36 @@ def random_word(difficulty):
 
     dictionary.close()
 
-    return word
+    return word.lower()
 
 def print_snowman(incorrect_guesses):
     if incorrect_guesses == 0:
         return
+    
     elif incorrect_guesses == 1:
         print("(       )\n '_____'")
+    
     elif incorrect_guesses == 2:
         print(" (     )\n(       )\n '-----'")
+    
     elif incorrect_guesses == 3:
         print("  (   )\n (     )\n(       )\n '-----'")
+    
     elif incorrect_guesses == 4:
         print("  ('v')\n (     )\n(       )\n '-----'")
+    
     elif incorrect_guesses == 5:
         print("    ('v')\n--<(  .  )>--\n  (   .   )\n   '-----'")
+    
     elif incorrect_guesses == 6:
         print("     ___\n   _|___|_\n    ('v')\n--<(  .  )>--\n  (   .   )\n   '-----'") #Game over
+    
+    else:
+        print("How did we get here: something went wrong and the number of incorrect guesses isn't within the correct range")
+
+def print_list(list):
+    for i in list:
+        print(i, end = "")
+    print()
 
 main()
