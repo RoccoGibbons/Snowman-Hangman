@@ -11,16 +11,36 @@ def main():
 
     for i in range(length):
         display.append('-')
-    print(display)
-    print()
 
-    incorrect_guesses = 6
+    incorrect_guesses = 0
+    guessed = False
 
-    while incorrect_guesses != 6:
-        break
+    while True:
+        print(display)
+        guess = input("Guess a letter or word: ")
+        guess = guess.lower()
+        if guess == word:
+            guessed = True
 
-    print_snowman(incorrect_guesses)
+        elif guess in word:
+            for i in range(len(word)):
+                if word[i] == guess:
+                    display[i] = guess
+        
+        else:
+            incorrect_guesses += 1
+            print_snowman(incorrect_guesses)
+        
+        if ''.join(display) == word:
+            guessed = True
 
+        if incorrect_guesses == 6 or guessed == True:
+            break
+
+    if incorrect_guesses == 6:
+        print("Game over! The word was ", word)
+    elif guessed == True:
+        print("You guessed the word! You win!")
 
 
 def random_word(difficulty):
